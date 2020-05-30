@@ -180,3 +180,14 @@
 
      
 
+
+
+##### refs -
+
+JS : 
+
+http://javaeleven.com/archives/91
+
+[https://www.it-swarm.dev/ko/javascript/%EC%97%AC%EB%9F%AC-%EC%A1%B0%EA%B1%B4%EC%9D%B4%EC%9E%88%EB%8A%94-queryselectorall/1056085745/](https://www.it-swarm.dev/ko/javascript/여러-조건이있는-queryselectorall/1056085745/)
+
+https://shxrecord.tistory.com/139
