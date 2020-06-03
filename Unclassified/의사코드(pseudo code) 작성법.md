@@ -17,7 +17,7 @@
 
      * 프로그램의 문제를 해결하기 위한 도구로, 또는 다른 사람들과 프로그램의 흐름에 대해 소통하기 위한 방법으로 활용
 
-     * ![0_dSK9f5_7_kVZJ02j-1](C:\Users\User\Desktop\TodayILearned\img\0_dSK9f5_7_kVZJ02j-1.jpg)
+     * ![0_dSK9f5_7_kVZJ02j-1](https://sujinlee.me/content/images/2019/09/0_dSK9f5_7_kVZJ02j-1.jpg)
 
        (출처 : https://sujinlee.me/pseudocode/)
 
