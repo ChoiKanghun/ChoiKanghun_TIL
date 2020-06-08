@@ -50,7 +50,6 @@
      }
      StudyObj3.prototype.showStudy = function(){
        console.log(this.name + "님은 오늘 " + this.subject + "를 공부하셔야 합니다.");
-     
      }
      
      var proto1 = new StudyObj3("최강훈", "자바");
@@ -61,9 +60,9 @@
      console.log(proto1.showStudy === proto2.showStudy);
      
      ```
-
-     (프로토타입을 쓰지 않으면 객체마다 메소드를 가지기 때문에 메모리 낭비 있음 !)
-
+     
+(프로토타입을 쓰지 않으면 객체마다 메소드를 가지기 때문에 메모리 낭비 있음 !)
+   
 2. 정규표현식 RegExp 사용법
 
    - 숫자 하나(\d)
