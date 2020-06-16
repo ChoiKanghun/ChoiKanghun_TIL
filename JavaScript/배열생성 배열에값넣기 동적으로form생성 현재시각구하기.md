@@ -1,6 +1,6 @@
 ### JavaScript
 
-1. 배열 생성방법 
+1. 배열 생성방법 <br>
 
    ```javascript
    // 길이가 0인 배열 생성(예전 방식)
@@ -19,7 +19,10 @@
    var myArray5 = [1, 2, 3, "홍길동", "아무개"];
    ```
 
+   <br>
+
 2. 배열에 값 넣기(push)
+   <br>
 
    ```javascript
    var arr = [ 1, 2, 3, 4 ];
@@ -27,7 +30,10 @@
    console.log( arr ); // [ 1, 2, 3, 4, 5 ]
    ```
 
+   <br>
+
 3. 동적으로 form 생성하기. (form에 객체 넣기, input 이름, 값 설정. 세팅.)
+   <br>
 
    ```javascript
    var form = document.createElement("form"); //form생성
@@ -48,17 +54,20 @@
    form.submit();//form을 제출.
    ```
 
+   <br>
+
 4. JS 현재 시각, 날짜 구하기
-   
+   <br>
 * 오늘 날짜
-   
+  
      ```javascript
      let today = new Date();   
      ```
    
-     
+     <br>
    
    * 연도, 월, 일 구하기
+     <br>
    
      ```javascript
      let year = today.getFullYear(); // 년도
@@ -67,19 +76,25 @@
      let day = today.getDay();  // 요일
      ```
    
-   * 시간, 분, 초, 밀리초 구하기
+     <br>
    
-     ```javascript
-  let today = new Date();   
+  * 시간, 분, 초, 밀리초 구하기
+    <br>
+  
+    ```javascript
+    let today = new Date();   
      
      let hours = today.getHours(); // 시
      let minutes = today.getMinutes();  // 분
      let seconds = today.getSeconds();  // 초
      let milliseconds = today.getMilliseconds(); // 밀리초
-     ```
-   
+    ```
+  
+    <br>
+  
    * 특정 형식으로 날짜 구하기
-   
+     <br>
+  
      ```javascript
      let today = new Date();   
      
@@ -92,9 +107,12 @@
      2020. 5. 26. 오후 3:40:29
      */
      ```
-   
+  
+     <br>
+  
    * JS 날짜 연산하기(년, 월)
-   
+     <br>
+  
      ```javascript
      let date = new Date();
      date.setFullYear(date.getFullYear() + 1);
@@ -108,9 +126,12 @@
      date.setMonth(date.getMonth() + 1);
      //오늘로부터 한 달 후.
      ```
-   
+  
+     <br>
+  
    * JS 날짜 구하기(일, 요일)
-   
+  <br>
+     
      ```javascript
      //일
      let date = new Date();
@@ -128,27 +149,27 @@
      weekday[6] = "Saturday";
      
      var resultDate = weekday[today.getDay()];
-     ```
-   
+  ```
      
-   
+     <br>
+  
 
 refs
 
-Javascript
-https://offbyone.tistory.com/133
+Javascript<br>
+https://offbyone.tistory.com/133 <br>
 
-http://blog.302chanwoo.com/2017/08/javascript-array-method/
+http://blog.302chanwoo.com/2017/08/javascript-array-method/ <br>
 
-http://blog.naver.com/PostView.nhn?blogId=ddvp16&logNo=50169756695 - document.form.action
-https://www.w3schools.com/jsref/met_form_submit.asp - document.form.submit();
-https://www.w3schools.com/jsref/prop_form_method.asp - document.form.method
-https://here4you.tistory.com/87 - document.form.setAttribute, form.appendChild();
-https://m.blog.naver.com/PostView.nhn?blogId=whdahek&logNo=220924270812&proxyReferer=https:%2F%2Fwww.google.com%2F - javascript form 전송 시 form 안에 객체 넣기.
+http://blog.naver.com/PostView.nhn?blogId=ddvp16&logNo=50169756695 - document.form.action<br>
+https://www.w3schools.com/jsref/met_form_submit.asp - document.form.submit();<br>
+https://www.w3schools.com/jsref/prop_form_method.asp - document.form.method<br>
+https://here4you.tistory.com/87 - document.form.setAttribute, form.appendChild();<br>
+https://m.blog.naver.com/PostView.nhn?blogId=whdahek&logNo=220924270812&proxyReferer=https:%2F%2Fwww.google.com%2F - javascript form 전송 시 form 안에 객체 넣기.<br>
 
-https://hianna.tistory.com/325 - 자바스크립트 현재 날짜 구하기, toLocaleDateString, toLocaleTimeString, toLocaleString
-https://hianna.tistory.com/326 - 자바스크립트 날짜 더하기, 빼기
-https://www.w3schools.com/jsref/jsref_getday.asp - 자바스크립트 요일 구하기
+https://hianna.tistory.com/325 - 자바스크립트 현재 날짜 구하기, toLocaleDateString, toLocaleTimeString, toLocaleString<br>
+https://hianna.tistory.com/326 - 자바스크립트 날짜 더하기, 빼기<br>
+https://www.w3schools.com/jsref/jsref_getday.asp - 자바스크립트 요일 구하기<br>
 
 
 
