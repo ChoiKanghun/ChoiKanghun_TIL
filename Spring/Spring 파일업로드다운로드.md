@@ -1,12 +1,20 @@
 # TIL 200605(Fri)
 
-## 스프링 파일 업로드 및 다운로드
+# TIL 200616(Tue)
+
+# 스프링 파일 업로드 및 다운로드
+
+<br>
+
+# 파일 업로드
+
+<br>
 
 웹 클라이언트가 서버에게 파일을 업로드할 때에는 HTTP 프로토콜의 바디 부분에 파일 정보를 담아서 전송을 하게 된다. 파일을 여러 개 보내면 다음과 같이 바디에 여러 개의 파일 정보가 담겨 온다.
 
 <br>
 
- ![image-20200605214037477](C:\Users\User\AppData\Roaming\Typora\typora-user-images\image-20200605214037477.png)
+ ![image-20200605214037477](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2Fnoz9K%2FbtqETLoZwJG%2FEOdm97YL2wK7FQWKHk2V80%2Fimg.png)
 
   <br>
 
@@ -24,7 +32,7 @@ HttpServletRequest는 HTTP 프로토콜의 바디를 읽어들이는 InputStream
 
  <br>
 
-Spring MVC 파일을 업로드하려면 몇 가지 라이브러리와 설정을 추가해야 한다. 
+Spring을 이용해 파일을 업로드하려면 몇 가지 라이브러리와 설정을 추가해야 한다. 
 
 MultiPart를 처리하기 위해서는 직접 구현하지 않고 주로 아파치에서 제공하는 `commons-fileupload` 라이브러리를 사용한다.  
 
@@ -64,8 +72,8 @@ DipsatcherServlet은 준비과정에서 multipart/form-data가 요청으로 들�
 @Bean
 public MultipartResolver multipartResolver() {
 	org.springframework.web.multipart.commons.CommonsMultipartResolver multipartResolver 
-        = new org.springframework.web.multipart.commons.CommonsMultipartResolver();
-	multipartResolver.setMaxUploadSize(10485760); // 1024 * 1024 * 10
+      	= new org.springframework.web.multipart.commons.CommonsMultipartResolver();
+	multipartResolver.setMaxUploadSize(10485760); // 1024 * 1024 * 10로 크기를 제한.
 	return multipartResolver;
 }
 ```
@@ -91,17 +99,15 @@ public MultipartResolver multipartResolver() {
 </form>
 ```
 
-  
+ <br>
 
 type이 file인 input 태그가 여러 개 있고 name 속성의 값이 같다면 file이 배열 형태로 컨트롤러에게 전달이 된다. 
 
  <br>
 
-한편 컨트롤러에서는 어떤 설정이 필요할까?
+한편 컨트롤러에서는 어떤 설정이 필요할까? 
 
- <br>
-
-폼으로부터 전달되는 파일 정보를 Controller에서는 PostMapping으로 정보를 받는다. 
+폼으로부터 전달되는 파일 정보를 Controller에서는 PostMapping으로 받는다. 
 
 파일 정보는 파라미터로 전달되고, 이 때 MultipartFile type으로 전달된다. 
 
@@ -121,13 +127,29 @@ MultipartFile의 메소드를 이용하면 업로드 되는 파일의 이름, �
 
  
 
-#### 다운로드
+# 파일 다운로드
 
  <br>
 
 서버의 특정 디렉토리는 외부에서 접근할 수 없다. 
 
-이런 파일을 외부에서 사용할 수 있도록 다운로드 기능을 제공해야 한다. 
+이런 파일을 외부에서 사용할 수 있도록 다운로드 기능을 제공해야 한다.  
+
+다운로드에 대해서는 
+
+* 클라이언트 -> 서버 
+
+* 서버 -> 클라이언트
+
+의 두 가지 방향이 있을 수 있다. 
+
+여기서는 `클라이언트 -> 서버`를 알아보도록 한다. 
+
+<br>
+
+## 클라이언트가 업로드한 파일을 서버가 다운로드 하기
+
+<br>
 
 파일을 다운로드하는 Controller메서드에서는 아래 코드와 같이 
 
@@ -135,20 +157,87 @@ MultipartFile의 메소드를 이용하면 업로드 되는 파일의 이름, �
 
 캐시를 사용하지 않도록 설정해야 한다. 
 
-그리고 나서 파일 정보를 HttpServlet의 Response의 OutpuStream으로 출력해야 한다.
+그리고 나서 파일 정보를 HttpServlet의 Response의 OutputStream으로 출력해야 한다.
 
  <br>
 
-```markup
-response.setHeader("Content-Disposition", "attachment; filename=\" + fileName + "\";);
-response.setHeader("Content-Transfer-Encoding", "binary");
-response.setHeader("Content-Type", contentType);
-response.setHeader("Content-Length", fileLength;
-response.setHeader("Pragma", "no-cache;");
-response.setHeader("Expires", "-1;");
+Controller
+
+```java
+	@PostMapping(path = "...")
+	public void addComment(
+        @RequestParam(name = "file", required = false) MultipartFile file,
+        HttpServletResponse response) throws IOException {
+
+		String fileName = file.getOriginalFilename();
+		String fileExtName 
+            = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+		String saveFileName = fileService.genereateSaveFileName(fileExtName);
+		String contentType = file.getContentType();
+		long fileLength = file.getSize();
+		
+		System.out.println("fileLength : "  + fileLength);
+		System.out.println("fileName : " + fileName);
+		System.out.println("fileExtName : " + fileExtName);
+		System.out.println("saveFileName : " + saveFileName);
+		System.out.println("contentType : " + contentType);
+
+		final String SAVE_PATH = "c:/tmp/";
+		byte[] data = file.getBytes();
+		FileOutputStream fos = new FileOutputStream(SAVE_PATH + saveFileName); 
+		fos.write(data);
+		fos.close();
+	}
 ```
 
  <br>
+
+Service(genereateSaveFileName)
+
+```java
+	@Override
+	public String genereateSaveFileName(String fileExtName) {
+		String saveFileName = "";
+		Calendar calendar = Calendar.getInstance();
+		
+		saveFileName += calendar.get(Calendar.YEAR);
+		saveFileName += calendar.get(Calendar.MONTH);
+		saveFileName += calendar.get(Calendar.DATE);
+		saveFileName += calendar.get(Calendar.HOUR);
+		saveFileName += calendar.get(Calendar.MINUTE);
+		saveFileName += calendar.get(Calendar.SECOND);
+		saveFileName += calendar.get(Calendar.MILLISECOND);
+		saveFileName += fileExtName;
+		return saveFileName;
+	}
+```
+
+<br>
+
+콘솔
+
+```html
+fileLength : 3272
+fileName : 42.png
+fileExtName : .png
+saveFileName : 20205163053271.png
+contentType : image/png
+
+```
+
+<br>
+
+위와 같이 적어주고, 지정한 path로 post 요청을 보내면, 
+
+내 컴퓨터(서버)에 클라이언트가 업로드 한 `42.png`라는 이름으로 업로드 한 파일이 들어온다. 
+
+<br>
+
+![image-20200616151009600](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FbuZsGH%2FbtqESqsKRZJ%2F9C6Yn3hROkKGjsMkgulYT0%2Fimg.png)
+
+<br>
+
+<br>
 
 refs - 
 
