@@ -1,0 +1,226 @@
+# styled-components 쓰는법
+
+
+
+팀프로젝트를 하면서 프레임워크로 React를 사용하기로 결정했고, 이에 따라 React의 css styling 방식인 styled-components를 써보기로 했다. 이번 글에서는 이것을 사용하는 방법에 대해 알아보려고 한다. 
+
+
+
+# 설치
+
+
+
+`npm install --save styled-components`  
+
+을 통해 styled-components를 설치한다. 
+
+
+
+
+
+<br>
+
+
+
+설치가 완료되었다면 component가 위치한 곳에 import 시켜준다. 
+
+import 시키는 방법은 다음과 같다. 
+
+
+
+<br>
+
+
+
+`import styled from 'styled-components';`
+
+
+
+<br>
+
+
+
+# 사용법
+
+
+
+사용법은 기존에 css를 어떻게 쓰는지 알던 사람이라면 매우 간단하다. 
+
+만약 원래의 코드가 다음과 같이 되어있다고 생각하면, 
+
+
+
+<br>
+
+
+
+```html
+<div style="color:red">
+  Hello world!
+</div>
+```
+
+
+
+<br>
+
+
+
+styled components는 다음과 같이 사용할 수 있다. 
+
+
+
+
+
+```jsx
+const ItemBox = styled.div`
+	color: red;
+`
+
+...
+
+<ItemBox> Hello World! </ItemBox>
+```
+
+
+
+<br>
+
+
+
+## 만약 클래스별로 다른 속성을 주고 싶다면?
+
+기존의 프로그래밍 방식에서는 같은 class 이름이 `item` 인 녀석이 있고 class가 item이면서 동시에 `goodsName` 이라는 녀석이 있으면 css 파일에 다음과 같이 적어서 해결했을 것이다. 
+
+
+
+<br>
+
+
+
+``` css
+.item {
+  background-color:yellow;
+}
+
+.item.goodsName {
+  color: red;
+}
+```
+
+
+
+<br>
+
+
+
+그러나 이에 대해 styled-component 는 다른 방식으로 해결한다.  
+
+다음과 같이 말이다. 
+
+
+
+<br>
+
+
+
+```jsx
+const Item = styled.span`
+  background-color: yellow;
+  
+  &.goodsName {
+    color: red;
+  }
+`
+
+...
+
+<Item className="goodsName">
+	I am goodsName
+</Item>
+```
+
+
+
+<br>
+
+
+
+위의 코드는 우리가 의도한 대로 `I am goodsName` 부분이 배경 노랑, 글자 빨강을 나타낼 것이다. 
+
+
+
+# styled-components에 props 전달하기
+
+
+
+styled-components 가 정말 똑똑한 게 뭐냐면 props 도 받아서 처리해버린다는 것이다. 예를 들어 다음의 데이터가 있다고 하자. 
+
+
+
+<br>
+
+
+
+```json
+const jsonData = [
+  {name: "val1"},
+  {name: "val2"},
+  {name: "val3"},
+  ...
+]
+```
+
+
+
+<br> 
+
+위와 같은 데이터가 있는 상황에서, 우리는 받아온 jsonData의 홀수 번째 데이터만 추출해서 렌더링 하고 싶다. 이 경우, jsonData에 map 함수를 적용하되 index가 홀수인 것만 display를 "none" 으로 두면 될 것이다. 
+
+함수의 인자는 우리가 흔히 props를 넘기듯이 넘길 수 있다. 다음의 예시를 통해 어떻게 쓰는지 감을 잡아보자. 
+
+
+
+<br>
+
+
+
+```jsx
+const Goods = styled.li`
+    width: 50%;
+    height:50%;
+    display: ${props => props.dp};
+`
+
+<Goods dp={index % 2 == 1 ? "block" : "none"}>
+	// 윗줄 dp에 주목.
+  <item>something</item>
+  <item className="goodsName">something2</item>
+</Goods>
+```
+
+
+
+<br>
+
+
+
+위를 통해 styled-components는 props를 받고, 
+
+`props => props.전달받은인자` 의 형식으로 쓸 수 있음을 발견했다.  
+
+
+
+<br>
+
+
+
+refs - 
+
+​    https://blog.nerdfactory.ai/2019/10/25/react-styled-components.html 
+
+​    https://velog.io/@velopert/react-component-styling 
+
+​    https://medium.com/@justiceotuya/how-to-add-classnames-to-styled-components-f1f88518ab51 
+
+​    https://ko.reactjs.org/docs/conditional-rendering.html 
